@@ -4,34 +4,33 @@ namespace Day2.Services
 {
     public class GameService
     {
-        // Bereken de som van de ID's van de mogelijke spellen, gegeven de limieten van de kubussen.
-        public int CalculateSumOfPossibleGameIds(List<Game> games, Dictionary<string, int> cubeLimits)
+        // Calculate the sum of the powers of the minimum sets of cubes required for each game.
+        public int CalculateSumOfPowers(List<Game> games)
         {
-            int sum = 0;
+            int totalPower = 0;
             foreach (var game in games)
             {
-                if (IsGamePossible(game, cubeLimits))
-                {
-                    sum += game.Id;
-                }
+                var minSet = FindMinimumSetOfCubes(game);
+                int power = minSet["red"] * minSet["green"] * minSet["blue"];
+                totalPower += power;
             }
-            return sum;
+            return totalPower;
         }
 
-        // Bepaalt of een spel mogelijk is op basis van de maximale kubuslimieten.
-        private bool IsGamePossible(Game game, Dictionary<string, int> cubeLimits)
+        // Find the minimum set of cubes required for a game.
+        private Dictionary<string, int> FindMinimumSetOfCubes(Game game)
         {
-            var maxCubesShown = new Dictionary<string, int> { { "red", 0 }, { "green", 0 }, { "blue", 0 } };
+            var minCubes = new Dictionary<string, int> { { "red", 0 }, { "green", 0 }, { "blue", 0 } };
 
             foreach (var reveal in game.Reveals)
             {
-                if (maxCubesShown[reveal.Color] < reveal.Count)
+                if (minCubes[reveal.Color] < reveal.Count)
                 {
-                    maxCubesShown[reveal.Color] = reveal.Count;
+                    minCubes[reveal.Color] = reveal.Count;
                 }
             }
 
-            return maxCubesShown.All(mc => mc.Value <= cubeLimits[mc.Key]);
+            return minCubes;
         }
     }
 }
