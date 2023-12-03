@@ -1,5 +1,4 @@
-﻿using AdventOfCode2023.Dataprocessing.Models;
-using AdventOfCode2023.Dataprocessing.Services;
+﻿using AdventOfCode2023.Dataprocessing.Services;
 using AdventOfCode2023.Dataprocessing.Utilities;
 
 namespace AdventOfCode2023
