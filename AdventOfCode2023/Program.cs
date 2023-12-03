@@ -1,5 +1,5 @@
-﻿using AdventOfCode2023.Dataprocessing.Services;
-using AdventOfCode2023.Dataprocessing.Utilities;
+﻿using AdventOfCode2023.Data;
+using AdventOfCode2023.Services;
 
 namespace AdventOfCode2023
 {
@@ -7,14 +7,19 @@ namespace AdventOfCode2023
     {
         static void Main(string[] args)
         {
-            string filePath = "C:\\Users\\gijsd\\source\\repos\\AdventOfCode2023\\AdventOfCode2023\\Input\\input.txt";
-            var fileReader = new FileReaderUtility();
-            var extractor = new CalibrationExtractorService();
+            // Definieer het pad naar het inputbestand.
+            var filePath = @"C:\Users\gijsd\source\repos\AdventOfCode2023\AdventOfCode2023\Input\input.txt";
 
+            // Maak instanties van FileReader en NumberProcessingService.
+            var fileReader = new FileReader();
+            var processingService = new NumberProcessingService();
+
+            // Lees de regels uit het bestand en verwerk deze.
             var lines = fileReader.ReadLines(filePath);
-            var totalSum = lines.Select(line => extractor.ExtractCalibrationValue(line)).Sum();
+            int totalSum = processingService.ProcessLines(lines);
 
-            Console.WriteLine($"Totale som van kalibratiewaarden: {totalSum}");
+            // Print de totale som naar de console.
+            Console.WriteLine($"Total Sum: {totalSum}");
         }
     }
 }
